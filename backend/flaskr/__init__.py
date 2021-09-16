@@ -1,12 +1,14 @@
 import os
+import sys
 from flask import Flask, request, abort, jsonify
 from flask_sqlalchemy import SQLAlchemy  # , or_
 from flask_cors import CORS
 import random
 
-from models import setup_db, Book
+from models import setup_db, Book, db
 
 BOOKS_PER_SHELF = 8
+
 
 def paginate_books(request, items):
     page = request.args.get('page', 1, type=int)
@@ -58,9 +60,10 @@ def create_app(test_config=None):
 
         # return response
         return jsonify({
-            "success":True,
+            "success": True,
             "books": books_formated,
-            "total_books": len(books_formated),
+            "total_books": len(books),
+            "books_per_page": len(books_formated),
             "page": page
         })
 
@@ -99,12 +102,41 @@ def create_app(test_config=None):
     # @TODO: Write a route that will delete a single book.
     #        Response body keys: 'success', 'deleted'(id of deleted book), 'books' and 'total_books'
     #        Response body keys: 'success', 'books' and 'total_books'
-
     # TEST: When completed, you will be able to delete a single book by clicking on the trashcan.
 
     # @TODO: Write a route that create a new book.
     #        Response body keys: 'success', 'created'(id of created book), 'books' and 'total_books'
     # TEST: When completed, you will be able to a new book using the form. Try doing so from the last page of books.
     #       Your new book should show up immediately after you submit it at the end of the page.
+
+    @app.route('/books', methods=['POST'])
+    def create_book():
+        # get body request
+        body = request.get_json()
+        newtitle = body.get('title', None)
+        newauthor = body.get('author', None)
+        newrating = body.get('rating', None)
+
+        # create pattern
+        error = False
+        try:
+            book = Book(
+                title=newtitle,
+                author=newauthor,
+                rating=newrating
+                )
+            book.insert()
+        except:
+            error = True
+            db.session.rollback()
+            print(sys.exc_info())
+        finally:
+            db.session.close()
+
+        if error:
+            abort(400)
+        else:
+            return jsonify({"message": "Book succesfully created", "success": True})
+
 
     return app

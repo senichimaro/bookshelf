@@ -1,0 +1,9 @@
+{"title": "Test Book1","author": "Test Author1","rating": 5}|{"message": "Book succesfully created", "success": true}
+{"title": "Test Book2","author": "Test Author2","rating": 5}|{"message": "Book succesfully created", "success": true}
+{"title": "Test Book3","author": "Test Author3","rating": 5}|{"message": "Book succesfully created", "success": true}
+{"title": "Test Book4","author": "Test Author4","rating": 5}|{"message": "Book succesfully created", "success": true}
+{"title": "Test Book5","author": "Test Author5","rating": 5}|{"message": "Book succesfully created", "success": true}
+{"title": "Test Book6","author": "Test Author6","rating": 5}|{"message": "Book succesfully created", "success": true}
+{"title": "Test Book7","author": "Test Author7","rating": 5}|{"message": "Book succesfully created", "success": true}
+{"title": "Test Book8","author": "Test Author8","rating": 5}|{"message": "Book succesfully created", "success": true}
+{"title": "Test Book9","author": "Test Author9","rating": 5}|{"message": "Book succesfully created", "success": true}

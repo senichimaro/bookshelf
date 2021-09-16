@@ -41,8 +41,8 @@ class BookTestCase(unittest.TestCase):
 
         self.assertEqual(res.status_code, 200)
         self.assertEqual(data['success'], True)
-        self.assertEqual(data['total_books'], data['total_books'] >= 1)
-        self.assertEqual(len(data['books']), len(data['books']) >= 1)
+        self.assertTrue(data["total_books"])
+        self.assertTrue(len(data['books']))
 
     def test_update_rating(self):
         res = self.client().patch("/books/3", json={"rating": 3})
@@ -52,6 +52,13 @@ class BookTestCase(unittest.TestCase):
         self.assertEqual(res.status_code, 200)
         self.assertEqual(data["success"], True)
         self.assertEqual(book.format()["rating"], 3)
+
+    def test_create_book(self):
+        res = self.client().post('/books', json=self.new_book)
+        data = json.loads(res.data)
+
+        self.assertEqual(res.status_code, 200)
+        self.assertEqual(data['success'], True)
 
 
 if __name__ == "__main__":
